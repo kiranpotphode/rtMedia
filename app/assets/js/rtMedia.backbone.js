@@ -116,14 +116,20 @@ jQuery( function ( $ ) {
 				if ( el == undefined ) {
 					el = jQuery( ".rtmedia-list" ).parent().parent();
 				}
-				if ( el != undefined ) {
+				
+                if ( el != undefined ) {
 					if ( element != undefined ) {
-						$( element ).parent().parent().prevAll( "input[type=hidden]" ).each( function ( e ) {
-							query[$( this ).attr( "name" )] = $( this ).val();
+						$( element ).parent().parent().prevAll( "input[type=hidden]" ).not( "input[name=_wp_http_referer], input[name=bulk-action], input[name=is_up_shortcode], input[name=rtmedia_bulk_delete_nonce], input[name=rtmedia_create_album_nonce], input[name=rtmedia_media_nonce], input[name=rtmedia_upload_nonce], input[name=sort_parameters], input[name=rtmedia_allow_upload_attribute]" ).each( function ( e ) {
+                            if ( $( this ).attr( "name" ) ) {
+                                query[ $( this ).attr( "name" ) ] = $( this ).val();
+                            }							
 						} );
 					}
-					$( el ).find( "input[type=hidden]" ).each( function ( e ) {
-						query[$( this ).attr( "name" )] = $( this ).val();
+					
+                    $( el ).find( "input[type=hidden]" ).not( "input[name=_wp_http_referer], input[name=bulk-action], input[name=is_up_shortcode], input[name=rtmedia_bulk_delete_nonce], input[name=rtmedia_create_album_nonce], input[name=rtmedia_media_nonce], input[name=rtmedia_upload_nonce], input[name=sort_parameters], input[name=rtmedia_allow_upload_attribute]" ).each( function ( e ) {
+                        if ( $( this ).attr( "name" ) ) {
+                            query[ $( this ).attr( "name" ) ] = $( this ).val();
+                        }
 					} );
 				}
 				this.fetch( {
